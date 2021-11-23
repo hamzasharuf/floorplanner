@@ -1,4 +1,4 @@
-package com.hamzasharuf.floorplanner.model
+package com.hamzasharuf.floor_planner.model
 
 import kotlin.math.max
 import kotlin.math.min

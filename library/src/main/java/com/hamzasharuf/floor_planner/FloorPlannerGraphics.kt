@@ -1,10 +1,10 @@
-package com.hamzasharuf.floorplanner
+package com.hamzasharuf.floor_planner
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import com.hamzasharuf.floorplanner.model.Polygon
+import com.hamzasharuf.floor_planner.model.Polygon
 
 /**
  * This class is responsible for rendering a [FloorPlanner] on a canvas.

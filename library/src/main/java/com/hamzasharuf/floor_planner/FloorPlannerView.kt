@@ -1,11 +1,11 @@
-package com.hamzasharuf.floorplanner
+package com.hamzasharuf.floor_planner
 
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatImageView
-import com.hamzasharuf.floorplanner.model.Polygon
+import com.hamzasharuf.floor_planner.model.Polygon
 
 /**
  * This class represents a virtual floor planner that can be used as a view

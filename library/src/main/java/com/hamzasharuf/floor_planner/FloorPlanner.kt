@@ -1,7 +1,7 @@
-package com.hamzasharuf.floorplanner
+package com.hamzasharuf.floor_planner
 
-import com.hamzasharuf.floorplanner.model.Point
-import com.hamzasharuf.floorplanner.model.Polygon
+import com.hamzasharuf.floor_planner.model.Point
+import com.hamzasharuf.floor_planner.model.Polygon
 
 
 /**

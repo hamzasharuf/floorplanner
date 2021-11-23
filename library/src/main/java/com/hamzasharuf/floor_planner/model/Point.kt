@@ -1,4 +1,4 @@
-package com.hamzasharuf.floorplanner.model
+package com.hamzasharuf.floor_planner.model
 
 import kotlin.math.abs
 import kotlin.math.hypot

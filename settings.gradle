@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Floor Planner"
 include ':app'
+include ':library'

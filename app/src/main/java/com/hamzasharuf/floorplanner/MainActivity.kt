@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val fp = findViewById<FloorPlannerView>(R.id.floor_planner)
         fp.setExtendedTouchRadius(50)
-        fp.setPadding(80.0)
+        fp.setBoxPadding(80f)
         fp.onCoordinatesUpdatedListener = object : FloorPlannerView.OnCoordinatesUpdatedListener {
             override fun onCoordinatesUpdated(polygon: Polygon) {
                 Log.d("MainActivityLogs", "New Vertexes Coordinates => ${polygon.vertexes}")

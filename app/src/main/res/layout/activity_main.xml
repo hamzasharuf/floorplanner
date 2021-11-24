@@ -8,10 +8,14 @@
 
     <com.hamzasharuf.floor_planner.FloorPlannerView
         android:id="@+id/floor_planner"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/conan"
         android:scaleType="centerCrop"
+        app:extendedTouchRadius="50"
+        app:markerColor="@color/teal_700"
+        app:markerRadius="20"
+        app:polygonStrokeWidth="20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

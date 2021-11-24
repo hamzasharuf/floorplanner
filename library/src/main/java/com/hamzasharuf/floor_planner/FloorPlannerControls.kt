@@ -15,19 +15,24 @@ import kotlin.math.sqrt
  * @property floorPlanner the floor planner object to control.
  * @constructor Creates the controls object for specified floor planner.
  */
-class FloorPlannerControls(private val floorPlanner: FloorPlanner) {
+internal class FloorPlannerControls(private val floorPlanner: FloorPlanner) {
+
+    internal companion object {
+        internal const val DEFAULT_EXTENDED_VERTEX_TOUCH_RADIUS = 30
+        internal const val DEFAULT_BOX_PADDING: Float = 50f
+    }
 
     /**
      * Additional imaginary radius to the vertex to make the touch event on the radius more
      * easy for the user.
      */
-    var extendedVertexTouchRadius = 30
+    internal var extendedVertexTouchRadius = DEFAULT_EXTENDED_VERTEX_TOUCH_RADIUS
 
     /**
      * Add padding to the surrounding box to prevent the [polygon] from exceeding this padding
      * and to have a sufficient space between the box borders and the [polygon].
      */
-    var boxPadding = 50.0
+    internal var boxPadding = DEFAULT_BOX_PADDING
 
     /**
      * The draggable object identifies the currently dragged item and whether it is a [Draggable.Vertex] or
@@ -39,13 +44,13 @@ class FloorPlannerControls(private val floorPlanner: FloorPlanner) {
      * The minimum x coordinate that the polygon vertexes can't exceed.
      */
     private val xMin: Double
-        get() = boxPadding
+        get() = boxPadding.toDouble()
 
     /**
      * The minimum y coordinate that the polygon vertexes can't exceed.
      */
     private val yMin: Double
-        get() = boxPadding
+        get() = boxPadding.toDouble()
 
     /**
      * The maximum x coordinate that the polygon vertexes can't exceed.
@@ -65,7 +70,7 @@ class FloorPlannerControls(private val floorPlanner: FloorPlanner) {
      * on the vertex. It's equal to the radius of the vertex plus the [extendedVertexTouchRadius].
      */
     private val vertexTouchRadius =
-        FloorPlanner.DEFAULT_MARKER_RADIUS + extendedVertexTouchRadius
+        floorPlanner.markerRadius + extendedVertexTouchRadius
 
     /**
      * The polygon object which represents the visible [FloorPlannerView] using
@@ -75,10 +80,8 @@ class FloorPlannerControls(private val floorPlanner: FloorPlanner) {
         get() = floorPlanner.polygon
 
     /**
-     * Handles the given event by updating the stick position accordingly.
-     * If the event is a release event the stick's position is set back
-     * to the center. Otherwise the stick's position is moved towards the
-     * event's position, and capped at the border of the joystick container.
+     * Handles the given event by updating the polygon or vertexes'
+     * position accordingly.
      *
      * @param event The event to process
      */
@@ -162,8 +165,8 @@ class FloorPlannerControls(private val floorPlanner: FloorPlanner) {
      */
     private fun getVertexCenter(point: Point): Point {
         return Point(
-            point.x + (FloorPlanner.DEFAULT_MARKER_RADIUS),
-            point.y + (FloorPlanner.DEFAULT_MARKER_RADIUS),
+            point.x + (floorPlanner.markerRadius),
+            point.y + (floorPlanner.markerRadius),
         )
     }
 

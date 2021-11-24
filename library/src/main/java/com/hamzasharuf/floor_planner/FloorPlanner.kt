@@ -12,9 +12,9 @@ import com.hamzasharuf.floor_planner.model.Polygon
  * @param width the width of [FloorPlannerView].
  * @param height the height of [FloorPlannerView].
  */
-class FloorPlanner(
-    var width: Int,
-    var height: Int,
+internal class FloorPlanner(
+    internal var width: Int,
+    internal var height: Int,
 ) {
 
     companion object {
@@ -22,24 +22,24 @@ class FloorPlanner(
          * The default radius of the marker which is used to describe
          * a polygon vertex on the [FloorPlannerView].
          */
-        const val DEFAULT_MARKER_RADIUS = 8
+        internal const val DEFAULT_MARKER_RADIUS = 8
 
         /**
          * The default width of the [polygon] stroke.
          */
-        const val DEFAULT_STROKE_WIDTH = 7f
+        internal const val DEFAULT_STROKE_WIDTH = 7f
 
         /**
          * Describes the width ratio the polygon will take out of the
          * full [FloorPlanner] width once it's drawn for the first time.
          */
-        private const val INITIAL_POLYGON_WIDTH_RATIO = 0.75
+        internal const val INITIAL_POLYGON_WIDTH_RATIO = 0.75f
 
         /**
          * Describes the height ratio the polygon will take out of the
          * full [FloorPlanner] height once it's drawn for the first time.
          */
-        private const val INITIAL_POLYGON_HEIGHT_RATIO = 0.75
+        internal const val INITIAL_POLYGON_HEIGHT_RATIO = 0.75f
     }
 
     /**
@@ -47,7 +47,32 @@ class FloorPlanner(
      * its embedded vertexes.
      * the initial value of the polygon is defined by [getInitialPolygon].
      */
-    val polygon: Polygon by lazy { getInitialPolygon() }
+    internal val polygon: Polygon by lazy { getInitialPolygon() }
+
+    /**
+     * The default radius of the marker which is used to describe
+     * a polygon vertex on the [FloorPlannerView].
+     */
+    var markerRadius = DEFAULT_MARKER_RADIUS
+
+    /**
+     * The default width of the [polygon] stroke.
+     */
+    var strokeWidth = DEFAULT_STROKE_WIDTH
+
+    /**
+     * Describes the width ratio the polygon will take out of the
+     * full [FloorPlanner] width once it's drawn for the first time.
+     * should be less than 1.
+     */
+    var polygonWidthRatio = INITIAL_POLYGON_WIDTH_RATIO
+
+    /**
+     * Describes the height ratio the polygon will take out of the
+     * full [FloorPlanner] height once it's drawn for the first time.
+     * should be less than 1.
+     */
+    var polygonHeightRatio = INITIAL_POLYGON_HEIGHT_RATIO
 
     /**
      * Draws the initial polygon based on the given view size.
@@ -56,26 +81,26 @@ class FloorPlanner(
         return Polygon.Builder()
             .addVertex(
                 Point(
-                    width * (1 - INITIAL_POLYGON_WIDTH_RATIO),
-                    height * (1 - INITIAL_POLYGON_HEIGHT_RATIO)
+                    width * (1 - polygonWidthRatio),
+                    height * (1 - polygonHeightRatio)
                 )
             )
             .addVertex(
                 Point(
-                    width * INITIAL_POLYGON_WIDTH_RATIO,
-                    height * (1 - INITIAL_POLYGON_HEIGHT_RATIO)
+                    width * polygonWidthRatio,
+                    height * (1 - polygonHeightRatio)
                 )
             )
             .addVertex(
                 Point(
-                    width * INITIAL_POLYGON_WIDTH_RATIO,
-                    height * INITIAL_POLYGON_HEIGHT_RATIO
+                    width * polygonWidthRatio,
+                    height * polygonHeightRatio
                 )
             )
             .addVertex(
                 Point(
-                    width * (1 - INITIAL_POLYGON_WIDTH_RATIO),
-                    height * INITIAL_POLYGON_HEIGHT_RATIO
+                    width * (1 - polygonWidthRatio),
+                    height * polygonHeightRatio
                 )
             )
             .close()

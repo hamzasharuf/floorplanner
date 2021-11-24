@@ -15,13 +15,21 @@ import com.hamzasharuf.floor_planner.model.Polygon
  * @property floorPlanner the floor planner object to draw.
  * @constructor Creates the graphics object with specified floor planner.
  */
-class FloorPlannerGraphics constructor(private val floorPlanner: FloorPlanner) {
+internal class FloorPlannerGraphics constructor(private val floorPlanner: FloorPlanner) {
 
     companion object {
-        private const val DEFAULT_MARKER_COLOR = Color.RED
-        private val DEFAULT_STROKE_COLOR = Color.rgb(120, 161, 46)
-        private val DEFAULT_FILL_COLOR = Color.argb(90, 120, 161, 46)
+        internal const val DEFAULT_MARKER_COLOR = Color.RED
+
+        internal val DEFAULT_STROKE_COLOR = Color.rgb(120, 161, 46)
+
+        internal val DEFAULT_FILL_COLOR = Color.argb(90, 120, 161, 46)
     }
+
+    internal var markerColor = DEFAULT_MARKER_COLOR
+
+    internal var strokeColor = DEFAULT_STROKE_COLOR
+
+    internal var fillColor = DEFAULT_FILL_COLOR
 
     /**
      * The polygon object which represents the visible [FloorPlannerView] using
@@ -36,7 +44,7 @@ class FloorPlannerGraphics constructor(private val floorPlanner: FloorPlanner) {
      */
     private val markerPaint: Paint by lazy {
         Paint().apply {
-            color = DEFAULT_MARKER_COLOR
+            color = markerColor
             style = Paint.Style.FILL
         }
     }
@@ -48,8 +56,8 @@ class FloorPlannerGraphics constructor(private val floorPlanner: FloorPlanner) {
     private val strokePaint: Paint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
-            color = DEFAULT_STROKE_COLOR
-            strokeWidth = FloorPlanner.DEFAULT_STROKE_WIDTH
+            color = strokeColor
+            strokeWidth = floorPlanner.strokeWidth
             isAntiAlias = true
             isDither = true
             strokeCap = Paint.Cap.ROUND
@@ -63,7 +71,7 @@ class FloorPlannerGraphics constructor(private val floorPlanner: FloorPlanner) {
     private val polygonPaint: Paint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.FILL
-            color = DEFAULT_FILL_COLOR
+            color = fillColor
             isAntiAlias = true
             isDither = true
         }
@@ -90,7 +98,7 @@ class FloorPlannerGraphics constructor(private val floorPlanner: FloorPlanner) {
             canvas.drawCircle(
                 it.x.toFloat(),
                 it.y.toFloat(),
-                FloorPlanner.DEFAULT_MARKER_RADIUS.toFloat(),
+                floorPlanner.markerRadius.toFloat(),
                 markerPaint
             )
         }

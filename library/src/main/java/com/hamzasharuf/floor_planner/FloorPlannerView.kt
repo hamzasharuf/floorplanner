@@ -20,7 +20,7 @@ class FloorPlannerView @JvmOverloads constructor(
 
     /**
      * This interface represents the callback to be invoked when the
-     * user interacts with the joystick.
+     * user interacts with the floor planner.
      */
     interface OnCoordinatesUpdatedListener {
 
@@ -56,24 +56,50 @@ class FloorPlannerView @JvmOverloads constructor(
     var onCoordinatesUpdatedListener: OnCoordinatesUpdatedListener? = null
 
     /**
-     * Adds additional imaginary radius to the vertex to make the touch event on the radius more
-     * easy for the user. Default value is 30.
-     *
-     * @param radius the new extended radius value.
+     * Sets up the components and floor planner with the supplied or default attributes.
      */
-    fun setExtendedTouchRadius(radius: Int){
-        controls.extendedVertexTouchRadius = radius
-    }
+    init {
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.FloorPlannerView,
+            0, 0
+        ).apply {
+            try {
+                setMarkerRadius(getInt(R.styleable.FloorPlannerView_markerRadius, FloorPlanner.DEFAULT_MARKER_RADIUS))
+                setPolygonStrokeWidth(
+                    getFloat(
+                        R.styleable.FloorPlannerView_polygonStrokeWidth,
+                        FloorPlanner.DEFAULT_STROKE_WIDTH
+                    )
+                )
+                setPolygonWidthRatio(
+                    getFloat(
+                        R.styleable.FloorPlannerView_polygonWidthRatio,
+                        FloorPlanner.INITIAL_POLYGON_WIDTH_RATIO
+                    )
+                )
+                setPolygonHeightRatio(
+                    getFloat(
+                        R.styleable.FloorPlannerView_polygonHeightRatio,
+                        FloorPlanner.INITIAL_POLYGON_HEIGHT_RATIO
+                    )
+                )
+                setBoxPadding(getFloat(R.styleable.FloorPlannerView_boxPadding, FloorPlannerControls.DEFAULT_BOX_PADDING))
+                setExtendedTouchRadius(
+                    getInt(
+                        R.styleable.FloorPlannerView_extendedTouchRadius,
+                        FloorPlannerControls.DEFAULT_EXTENDED_VERTEX_TOUCH_RADIUS
+                    )
+                )
 
-    /**
-     * Add padding to the surrounding box to prevent the polygon from exceeding this padding
-     * and to have a sufficient space between the box borders and the polygon.
-     * Default value is 50.
-     *
-     * @param padding the padding value.
-     */
-    fun setPadding(padding: Double) {
-        controls.boxPadding = padding
+                setMarkerColor(getColor(R.styleable.FloorPlannerView_markerColor, FloorPlannerGraphics.DEFAULT_MARKER_COLOR))
+                setStrokeColor(getColor(R.styleable.FloorPlannerView_strokeColor, FloorPlannerGraphics.DEFAULT_STROKE_COLOR))
+                setFillColor(getColor(R.styleable.FloorPlannerView_fillColor, FloorPlannerGraphics.DEFAULT_FILL_COLOR))
+
+            } finally {
+                recycle()
+            }
+        }
     }
 
     /**
@@ -94,11 +120,11 @@ class FloorPlannerView @JvmOverloads constructor(
      *
      * @param w Current width of the view
      * @param h Current height of the view
-     * @param oldw Old width of the view
-     * @param oldh Old height of the view
+     * @param oldW Old width of the view
+     * @param oldH Old height of the view
      */
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
+    override fun onSizeChanged(w: Int, h: Int, oldW: Int, oldH: Int) {
+        super.onSizeChanged(w, h, oldW, oldH)
         floorPlanner.width = w
         floorPlanner.height = h
     }
@@ -115,6 +141,92 @@ class FloorPlannerView @JvmOverloads constructor(
         invalidate()
         onCoordinatesUpdatedListener?.onCoordinatesUpdated(floorPlanner.polygon)
         return true
+    }
+
+    /**
+     * The color of the polygon fill.
+     */
+    fun setFillColor(color: Int) {
+        graphics.fillColor = color
+    }
+
+    /**
+     * The color of the outer borders of the polygon.
+     */
+    fun setStrokeColor(color: Int) {
+        graphics.strokeColor = color
+    }
+
+    /**
+     * The color of the marker which is used to describe
+     * a polygon vertex on the [FloorPlannerView].
+     */
+    fun setMarkerColor(color: Int) {
+        graphics.markerColor = color
+    }
+
+    /**
+     * The radius of the marker which is used to describe
+     * a polygon vertex on the [FloorPlannerView].
+     */
+    fun setMarkerRadius(radius: Int) {
+        floorPlanner.markerRadius = radius
+    }
+
+    /**
+     * The width of the outer borders of the polygon.
+     */
+    fun setPolygonStrokeWidth(width: Float) {
+        floorPlanner.strokeWidth = width
+    }
+
+    /**
+     * Describes the width ratio the polygon will take out of the
+     * full [FloorPlanner] width once it's drawn for the first time.
+     * should be between 0.6 and 1.
+     */
+    fun setPolygonWidthRatio(ratio: Float) {
+        floorPlanner.polygonWidthRatio =
+            when {
+                ratio < 0.6 -> 0.6f
+                ratio > 1 -> 1f
+                else -> ratio
+            }
+    }
+
+    /**
+     * Describes the height ratio the polygon will take out of the
+     * full [FloorPlanner] height once it's drawn for the first time.
+     * should be between 0.5 and 1.
+     */
+    fun setPolygonHeightRatio(ratio: Float) {
+        floorPlanner.polygonHeightRatio =
+            when {
+                ratio < 0.6 -> 0.6f
+                ratio > 1 -> 1f
+                else -> ratio
+            }
+    }
+
+    /**
+     * Adds additional imaginary radius to the vertex to make the touch event on the radius more
+     * easy for the user. Default value is 30.
+     *
+     * @param radius the new extended radius value.
+     */
+    fun setExtendedTouchRadius(radius: Int) {
+        controls.extendedVertexTouchRadius = radius
+    }
+
+    /**
+     * Add padding to the surrounding box to prevent the polygon from exceeding this padding
+     * and to have a sufficient space between the box borders and the polygon.
+     * Default value is 50.
+     *
+     * @param padding the padding value.
+     */
+    fun setBoxPadding(padding: Float) {
+        controls.boxPadding = padding
     }
 
 }

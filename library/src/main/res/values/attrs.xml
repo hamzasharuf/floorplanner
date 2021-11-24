@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FloorPlannerView">
+        <attr name="boxPadding" format="float" />
+        <attr name="extendedTouchRadius" format="integer" />
+        <attr name="markerColor" format="color" />
+        <attr name="strokeColor" format="color" />
+        <attr name="fillColor" format="color" />
+        <attr name="markerRadius" format="integer" />
+        <attr name="polygonStrokeWidth" format="float" />
+        <attr name="polygonWidthRatio" format="float" />
+        <attr name="polygonHeightRatio" format="float" />
+    </declare-styleable>
+</resources>

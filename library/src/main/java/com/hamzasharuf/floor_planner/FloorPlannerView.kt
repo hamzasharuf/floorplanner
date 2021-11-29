@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatImageView
+import com.hamzasharuf.floor_planner.model.Point
 import com.hamzasharuf.floor_planner.model.Polygon
 
 /**
@@ -142,6 +143,21 @@ class FloorPlannerView @JvmOverloads constructor(
         onCoordinatesUpdatedListener?.onCoordinatesUpdated(floorPlanner.polygon)
         return true
     }
+
+    /**
+     * The current polygon object which include information about the
+     * polygon, its sides, and the vertexes with their coordinates.
+     */
+    val polygon: Polygon
+        get() = floorPlanner.polygon
+
+    /**
+     * A direct accessor for the vertexes coordinates on the polygon.
+     * Note that these coordinates are related to the position of the coordinates
+     * with respect to the [FloorPlannerView] and not for the entire screen.
+     */
+    val vertexes: List<Point>
+        get() = polygon.vertexes
 
     /**
      * The color of the polygon fill.

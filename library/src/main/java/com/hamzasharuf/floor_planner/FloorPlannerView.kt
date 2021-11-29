@@ -238,11 +238,17 @@ class FloorPlannerView @JvmOverloads constructor(
      * Add padding to the surrounding box to prevent the polygon from exceeding this padding
      * and to have a sufficient space between the box borders and the polygon.
      * Default value is 50.
+     * Note: Don't set the padding to more than the [FloorPlannerView] <width / 2> or <height / 2>
+     * as it will lead to unexpected behaviour.
      *
      * @param padding the padding value.
      */
     fun setBoxPadding(padding: Float) {
-        controls.boxPadding = padding
+        if (padding < 0) {
+            controls.boxPadding = 0f
+        } else {
+            controls.boxPadding = padding
+        }
     }
 
 }
